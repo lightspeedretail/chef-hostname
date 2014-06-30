@@ -92,7 +92,7 @@ if fqdn
     
   execute "hostname #{hostname}" do
     only_if { node['hostname'] != hostname }
-    notifies :reload, 'ohai[reload]', :immediately
+    notifies :reload, 'ohai[hostname plugin]', :immediately
   end
 
   hostsfile_entry 'localhost' do
@@ -108,7 +108,8 @@ if fqdn
     action :create
   end
 
-  ohai 'reload' do
+  ohai 'hostname plugin' do
+    plugin "hostname"
     action :nothing
   end
 else
